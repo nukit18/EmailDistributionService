@@ -40,6 +40,9 @@ if __name__ == "__main__":
     email_recipient2 = ''
     email_recipient3 = ''
     email_recipient4 = ''
+
+    if not all([email_recipient1, email_recipient2, email_recipient3, email_recipient4]):
+        raise Exception("Заполните почты")
     
     separator = "-----------------------------------------------------"
     print(f"{separator}\nОтсутствующий шаблон")

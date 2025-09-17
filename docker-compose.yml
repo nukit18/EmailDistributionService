@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: database
+    hostname: database
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"
+    restart: always
+
+  app:
+    container_name: email_distribution_service_grpc
+    build: .
+    environment:
+      DATABASE_HOST: database
+    command: /bin/sh -c 'python manage.py migrate && python manage.py init_db_data && python manage.py rungrpc --port 50051 --workers 10'
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    networks:
+      - app-network
+    ports:
+      - "50051:50051"
+    restart: always
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge

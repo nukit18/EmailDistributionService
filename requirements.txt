@@ -1,0 +1,13 @@
+asgiref==3.9.1
+Django==5.2.6
+environs==14.3.0
+grpcio==1.75.0
+grpcio-tools==1.75.0
+marshmallow==4.0.1
+protobuf==6.32.1
+psycopg2-binary==2.9.10
+python-dotenv==1.1.1
+setuptools==80.9.0
+sqlparse==0.5.3
+typing_extensions==4.15.0
+tzdata==2025.2

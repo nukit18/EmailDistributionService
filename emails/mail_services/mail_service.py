@@ -83,9 +83,9 @@ class MailService:
                         template_params_hash=hashed_params,
                     ))
                 else:
-                    status = SendStatus.FAILED
+                    status = SendStatus.FAILURE
             elif recipient in invalid_recipients:
-                status = SendStatus.FAILED
+                status = SendStatus.FAILURE
             else:
                 status = SendStatus.UNSPECIFIED
 
