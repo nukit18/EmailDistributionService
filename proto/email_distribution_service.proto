@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package email_distribution;
+
+service EmailDistribution {
+  // Отправка сообщений на переданные адреса
+  rpc SendMail (SendMailRequest) returns (SendMailResponse);
+
+  // Получение статистики писем по email
+  rpc GetStatsByEmail (GetStatsByEmailRequest) returns (GetStatsByEmailResponse);
+}
+
+
+message SendMailRequest {
+  // Название шаблона (идентификатор)
+  string template_name = 1;
+
+  // Список email адресов получателей
+  repeated string recipients = 2;
+
+  // Переменные контекста, которые подставляются в шаблон
+  map<string, string> variables = 3;
+}
+
+message RecipientSendStatus {
+  // email получателя
+  string email = 1;
+
+  // статус отправки
+  SendStatus status = 2;
+}
+
+
+enum SendStatus {
+  // Неустановленный статус
+  UNSPECIFIED = 0;
+  // Успешно отправлено
+  SUCCESS = 1;
+  // Внутренняя ошибка при отправке
+  FAILURE = 2;
+  // Пропущено как дубликат
+  SKIPPED_DUPLICATE = 3;
+}
+
+message SendMailResponse {
+  // Список статусов по каждому получателю
+  repeated RecipientSendStatus results = 1;
+}
+
+
+message GetStatsByEmailRequest {
+  // email для которого возвращаем статистику
+  string email = 1;
+}
+
+message TemplateCount {
+  // Название шаблона (идентификатор)
+  string template_name = 1;
+  // Сколько писем этого шаблона было успешно отправлено на указанный email
+  uint64 count = 2;
+}
+
+// Ответ содержит общее число и разбивку по шаблонам
+message GetStatsByEmailResponse {
+  // общее количество отправленных писем на переданный email
+  uint64 total_sent = 1;
+
+  // список по шаблонам
+  repeated TemplateCount by_template = 2;
+}
