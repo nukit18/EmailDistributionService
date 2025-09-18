@@ -35,7 +35,7 @@ def client_get_stats(email_recipient: str):
 
 
 if __name__ == "__main__":
-    # укажите свои разные почтовые ящики
+    # укажите разные почтовые ящики
     email_recipient1 = ''
     email_recipient2 = ''
     email_recipient3 = ''
@@ -76,4 +76,4 @@ if __name__ == "__main__":
     print(f"{separator}\nПолучение статистики по ящику")
     client_get_stats(email_recipient1)
     print(f"{separator}\nПолучение статистики по ящику на который ничего не отправлялось")
-    client_get_stats("nik_babin2@inbox.ru")
+    client_get_stats(email_recipient4)
